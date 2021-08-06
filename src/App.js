@@ -1,9 +1,9 @@
 import "./assets/scss/index.scss";
-import Dice from "./components/Dice/Dice";
-import useDice from "./hooks/useDice";
+// import Dice from "./components/Dice/Dice";
+// import useDice from "./hooks/useDice";
 
 function App() {
-  const face = useDice(3);
+  // const face = useDice(3);
   return (
     // <Dice face={face} />
     <div className="App container">
