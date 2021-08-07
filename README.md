@@ -1,3 +1,13 @@
+# Resources Link
+
+[Landing Page Dribble Resource](https://dribbble.com/shots/10873345-Landing-Page-Hero-Upload-Animation "Landing Page")
+
+[Create Folder Modal Dribble Resource](https://dribbble.com/shots/15169672-VSX-Share-Modal "Create Folder Modal")
+
+[Offline Saved Files and Folder Dribble Resource](https://dribbble.com/shots/11077748-Clo-File-Manager-Web-app-concept "Offline Saved Files and Folder")
+
+[Authentication Dribble Resource](https://dribbble.com/shots/15979404-Dashboard-Login "Login and Signup")
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
