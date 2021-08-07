@@ -1,4 +1,18 @@
 .Button {
-  height: 50px;
-  border-radius: 8px;
+	padding-left: 24px;
+	padding-right: 24px;
+	border-radius: 10px;
+	position: relative;
+	transition: all 200ms linear;
+	// border: none;
+	cursor: pointer;
+	outline: 0;
+	// text-transform: capitalize;
+
+	&:focus {
+		box-shadow: none !important;
+	}
+	&:disabled {
+		pointer-events: none;
+	}
 }
