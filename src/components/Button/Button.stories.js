@@ -14,13 +14,13 @@ General.args = {
 }
 
 export const Outlined = Template.bind({})
-General.args = {
+Outlined.args = {
 	label: "Submit",
 	variant: "outlined-secondary",
 }
 
 export const Block = Template.bind({})
-General.args = {
+Block.args = {
 	label: "Block",
 	block: true,
 }
