@@ -15,8 +15,8 @@ General.args = {
 
 export const Outlined = Template.bind({});
 Outlined.args = {
-  label: "Submit",
-  variant: "outlined-secondary",
+  label: "Outlined",
+  variant: "outline-secondary",
 };
 
 export const Block = Template.bind({});

@@ -3,21 +3,18 @@ import styles from "./Header.module.scss";
 import Button from "../Button/Button";
 import Link from "../Link/Link";
 
-const Header = ({ src, links }) => {
+const Header = ({src, links}) => {
   return (
     <nav className={`py-4 ${styles.Header}`}>
       <img height="30" src={src} />
       <ul className="nav">
-        {links.map((x, index) => {
+        {links.map(({text, link}, index) => {
           return (
             <li key={index} className="nav-item">
-              <Link>{x.link}</Link>
+              <Link label={text} link={link}></Link>
             </li>
           );
         })}
-        <li className="nav-item">
-          <Link>Home</Link>
-        </li>
       </ul>
       <div className="d-flex">
         <Link>Log in</Link>
@@ -29,14 +26,14 @@ const Header = ({ src, links }) => {
 
 Header.propTypes = {
   src: PropTypes.string,
-  links: PropTypes.array,
+  links: PropTypes.arrayOf(PropTypes.object),
 };
 
 Header.defaultProps = {
   src: "https://b2b.talkspace.com/hs-fs/hubfs/TS_nav_logo-1.png?width=2540&name=TS_nav_logo-1.png",
   links: [
-    { text: "Home", link: "" },
-    { text: "Princing", link: "" },
+    {text: "Home", link: ""},
+    {text: "Princing", link: ""},
   ],
 };
 

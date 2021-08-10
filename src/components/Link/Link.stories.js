@@ -10,12 +10,14 @@ const Template = (args) => <Link {...args} />;
 
 export const General = Template.bind({});
 General.args = {
+  label: "Link",
+  to: "www.google.com",
   disabled: false,
-  label: "General Link",
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  disabled: true,
+  ...General.args,
   label: "Disabled Link",
+  disabled: true,
 };
