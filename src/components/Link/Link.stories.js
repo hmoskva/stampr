@@ -1,21 +1,23 @@
-import Link from "./Link"
+import Link from "./Link";
 
 export default {
-	title: "Shared/Link",
-	component: Link,
-	argTypes: {},
-}
+  title: "Shared/Link",
+  component: Link,
+  argTypes: {},
+};
 
-const Template = (args) => <Link {...args} />
+const Template = (args) => <Link {...args} />;
 
-export const General = Template.bind({})
+export const General = Template.bind({});
 General.args = {
-	disabled: false,
-	label: "General Link",
-}
+  label: "Link",
+  to: "www.google.com",
+  disabled: false,
+};
 
-export const Disabled = Template.bind({})
+export const Disabled = Template.bind({});
 Disabled.args = {
-	disabled: true,
-	label: "Disabled Link",
-}
+  ...General.args,
+  label: "Disabled Link",
+  disabled: true,
+};
