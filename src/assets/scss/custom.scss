@@ -1,5 +1,17 @@
-$theme-colors: (
-	"primary": #4b3eae,
-);
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;500;600&display=swap");
+
+$primary: #4b3eae;
+$font-family-sans-serif: "Spartan", sans-serif;
+
+// $theme-colors: (
+//   "primary": $primary,
+// );
+
+// $theme-colors: map-merge(
+//   $theme-colors,
+//   (
+//     "primary": #4b3eae,
+//   )
+// );
 
 @import "~bootstrap/scss/bootstrap";

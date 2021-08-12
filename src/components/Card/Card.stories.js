@@ -5,13 +5,13 @@ export default {
   component: Card,
   argTypes: {
     backgroundColor: {
-      control: { type: "color" },
+      control: {type: "color"},
     },
   },
 };
 
 const Template = (args) => (
-  <div style={{ width: 300, height: 300 }}>
+  <div style={{width: 300, height: 300}}>
     <Card {...args} />
   </div>
 );
