@@ -5,7 +5,7 @@ const Card = (props) => {
   return (
     <div
       className={`${styles.Card} ${props.className}`}
-      style={{backgroundColor: props.backgroundColor}}
+      style={{ backgroundColor: props.backgroundColor }}
     ></div>
   );
 };

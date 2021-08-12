@@ -22,6 +22,7 @@ export const uploadFile = async ({
   storageDirectory = "files",
   progressHookFn = null,
   errorHookFn = null,
+  setUploadTask = null,
 }) => {
   try {
     const storage = firebase.storage();
@@ -37,6 +38,9 @@ export const uploadFile = async ({
         .ref()
         .child(`/${storageDirectory}/${fileName}/`)
         .putString(dataUrl, "data_url");
+    }
+    if (setUploadTask) {
+      setUploadTask(uploadTask);
     }
 
     uploadTask.on(

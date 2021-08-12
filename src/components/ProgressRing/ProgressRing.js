@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./ProgressRing.module.scss";
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const ProgressRing = ({
   size,
@@ -16,9 +16,13 @@ const ProgressRing = ({
 
   const [offset, setOffset] = useState(0);
 
+  const isStrProgress = typeof progress === "string";
+
   useEffect(() => {
-    const progressOffset = ((100 - progress) / 100) * circumference;
-    setOffset(progressOffset);
+    if (!isStrProgress) {
+      const progressOffset = ((100 - progress) / 100) * circumference;
+      setOffset(progressOffset);
+    }
   }, [setOffset, circumference, progress, offset]);
 
   return (
@@ -44,7 +48,8 @@ const ProgressRing = ({
         strokeDasharray={circumference}
       />
       <text className={styles["svg-circle-text"]} x={center} y={center}>
-        {progress}%
+        {progress}
+        {isStrProgress ? "" : "%"}
       </text>
     </svg>
   );
@@ -55,8 +60,10 @@ ProgressRing.propTypes = {
     if (!(propName in props)) {
       return new Error(`missing ${propName}`);
     }
-    if (props[propName] > 100) {
-      return new Error(`${propName} can not be greater 100%`);
+    if (typeof props[propName] === "number") {
+      if (props[propName] > 100) {
+        return new Error(`${propName} can not be greater 100%`);
+      }
     }
   },
   size: PropTypes.number.isRequired,
@@ -70,7 +77,7 @@ ProgressRing.defaultProps = {
   size: 200,
   strokeWidth: 15,
   circleOneStroke: "#7ea9e1",
-  circleTwoStroke: "#7ea9e1",
+  circleTwoStroke: "#000",
 };
 
 export default ProgressRing;

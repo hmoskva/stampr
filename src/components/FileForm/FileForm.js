@@ -5,7 +5,13 @@ import Button from "../Button/Button";
 import { useState } from "react";
 import { uploadFile } from "../../utils/firebase";
 
-const FileForm = ({ file, onStartUpload, onSuccess, setProgress }) => {
+const FileForm = ({
+  file,
+  onStartUpload,
+  onSuccess,
+  setProgress,
+  setUploadTask,
+}) => {
   const [name, setName] = useState(file.name);
 
   const handleUpload = async () => {
@@ -19,6 +25,7 @@ const FileForm = ({ file, onStartUpload, onSuccess, setProgress }) => {
         fileName: name,
         storageDirectory: "toptal",
         progressHookFn: setProgress,
+        setUploadTask,
       });
       if (onSuccess) {
         onSuccess({
@@ -60,6 +67,7 @@ FileForm.propTypes = {
   onStartUpload: PropTypes.func,
   onSuccess: PropTypes.func,
   setProgress: PropTypes.func,
+  setUploadTask: PropTypes.func,
 };
 
 export default FileForm;
