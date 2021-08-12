@@ -1,0 +1,14 @@
+.FileUpload {
+  width: 100%;
+  border-radius: 40px;
+  background-color: #fff;
+}
+.DropContainer {
+  border: 1px dashed;
+  border-radius: 40px;
+  width: 100%;
+
+  span {
+    cursor: pointer;
+  }
+}
