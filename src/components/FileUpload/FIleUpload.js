@@ -7,7 +7,7 @@ import Icon from "../Icon/Icon";
 
 const FileUpload = ({ label, sublabel, accept }) => {
   const [uploading, setUploading] = useState(false);
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState({});
   const [showForm, setShowForm] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
