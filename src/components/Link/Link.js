@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./Link.module.scss";
 
-const Link = ({label, link, children, disabled}) => {
+const Link = ({ label, link, children, disabled }) => {
   return (
     <a
       to={link}
