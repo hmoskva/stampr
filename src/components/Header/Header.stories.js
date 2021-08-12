@@ -10,5 +10,9 @@ const Template = (args) => <Header {...args} />;
 
 export const General = Template.bind({});
 General.args = {
-  label: "Submit",
+  src: "https://b2b.talkspace.com/hs-fs/hubfs/TS_nav_logo-1.png?width=2540&name=TS_nav_logo-1.png",
+  links: [
+    { text: "Home", link: "" },
+    { text: "Princing", link: "" },
+  ],
 };
