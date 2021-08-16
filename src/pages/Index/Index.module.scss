@@ -3,15 +3,27 @@
 }
 .Hero {
   max-height: 400px;
+  @media (max-width: 480px) {
+    max-height: unset;
+  }
 }
 
 .HeroFileUpload {
   position: relative;
   top: 50px;
+  @media (max-width: 480px) {
+    position: unset;
+    margin-top: 15px;
+  }
 }
 
 .FooterCard {
   position: absolute;
   bottom: 30px;
   width: 100%;
+  @media (max-width: 480px) {
+    position: unset;
+    bottom: unset;
+    width: unset;
+  }
 }
