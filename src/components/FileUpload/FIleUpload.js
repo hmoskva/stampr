@@ -5,7 +5,7 @@ import FileForm from "../FileForm/FileForm";
 import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
 
-const FileUpload = ({ label, sublabel, accept }) => {
+const FileUpload = ({ label, sublabel, accept, className }) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -31,9 +31,9 @@ const FileUpload = ({ label, sublabel, accept }) => {
   const renderBody = () => {
     if (uploading) {
       return (
-        <div className="d-flex justify-content-between align-items-center w-50">
+        <div className="d-flex justify-content-between align-items-center w-100">
           <Icon icon="pause" onClick={handlePause} />
-          <ProgressRing progress={isPaused ? "Paused" : progress} />
+          <ProgressRing progress={isPaused ? "Paused" : progress} size={190} />
           <Icon icon="play" onClick={handlePlay} />
         </div>
       );
@@ -72,7 +72,7 @@ const FileUpload = ({ label, sublabel, accept }) => {
   };
 
   return (
-    <div className={`${styles.FileUpload} p-5`}>
+    <div className={`${styles.FileUpload} ${className} p-5`}>
       <div
         className={`d-flex flex-column align-items-center justify-content-center p-5 ${styles.DropContainer}`}
       >
@@ -95,6 +95,7 @@ FileUpload.propTypes = {
   sublabel: PropTypes.string,
   accept: PropTypes.string,
   onChange: PropTypes.func,
+  className: PropTypes.string,
 };
 
 FileUpload.defaultProps = {
