@@ -53,7 +53,7 @@ const FileForm = ({
       <form className="d-flex flex-column">
         <Input value={name} onChange={setName} />
         <Button
-          className="mt-3"
+          className="mt-4 fw-little"
           label="Upload This File"
           handleClick={handleUpload}
         />

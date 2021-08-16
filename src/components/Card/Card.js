@@ -5,14 +5,17 @@ const Card = (props) => {
   return (
     <div
       className={`${styles.Card} ${props.className}`}
-      style={{ backgroundColor: props.backgroundColor }}
-    ></div>
+      style={{ backgroundColor: props.bgColor }}
+    >
+      {props.children}
+    </div>
   );
 };
 
 Card.propTypes = {
-  backgroundColor: PropTypes.string,
+  bgColor: PropTypes.string,
   className: PropTypes.string,
+  children: PropTypes.element,
 };
 
 export default Card;
