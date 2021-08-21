@@ -2,23 +2,27 @@ import PropTypes from "prop-types";
 import styles from "./Header.module.scss";
 import Button from "../Button/Button";
 import Link from "../Link/Link";
+import { logout } from "../../utils/firebase";
 
 const Header = ({ src, links }) => {
   return (
     <nav className={`py-4 ${styles.Header}`}>
-      <img height="30" src={src} />
+      <Link to="/" className="p-0">
+        <img height="30" src={src} />
+      </Link>
       <ul className="nav">
         {links.map(({ text, link }, index) => {
           return (
             <li key={index} className="nav-item">
-              <Link label={text} link={link}></Link>
+              <Link label={text} to={link}></Link>
             </li>
           );
         })}
       </ul>
       <div className="d-flex">
-        <Link>Log in</Link>
+        <Link to="/login">Log in</Link>
         <Button label="Sign Up" />
+        <Button variant="danger" handleClick={() => logout()} label="Log out" />
       </div>
     </nav>
   );

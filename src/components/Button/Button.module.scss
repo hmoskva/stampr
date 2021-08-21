@@ -1,16 +1,16 @@
 .Button {
   padding-left: 24px;
   padding-right: 24px;
-  border-radius: 10px;
   position: relative;
   transition: all 200ms linear;
-  // border: none;
   cursor: pointer;
   outline: 0;
+  // text-align: center;
+  // display: inline-block;
   // text-transform: capitalize;
 
   &:focus {
-    box-shadow: none !important;
+    // box-shadow: none !important;
   }
   &:disabled {
     pointer-events: none;

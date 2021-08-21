@@ -1,11 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import AuthContext from "./contexts/AuthContext";
 import reportWebVitals from "./reportWebVitals";
+import "./utils/firebase";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <AuthContext.Provider>
+        <App />
+      </AuthContext.Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

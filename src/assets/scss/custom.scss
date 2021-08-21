@@ -3,15 +3,19 @@
 $primary: #4b3eae;
 $font-family-sans-serif: "Spartan", sans-serif;
 
-// $theme-colors: (
-//   "primary": $primary,
-// );
-
-// $theme-colors: map-merge(
-//   $theme-colors,
-//   (
-//     "primary": #4b3eae,
-//   )
-// );
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4,
+  7: $spacer * 5,
+  8: $spacer * 7,
+  9: $spacer * 8,
+  10: $spacer * 10,
+);
 
 @import "~bootstrap/scss/bootstrap";
