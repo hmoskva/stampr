@@ -19,6 +19,7 @@ if (!firebase.apps.length) {
 
 // const history = window.history;
 const db = firebase.firestore();
+console.log("db fire :>> ", db);
 const auth = firebase.auth();
 
 //* Watch user event
@@ -102,17 +103,25 @@ export const register = ({ first_name, last_name, email, password }) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        resolve(userCredential.user);
         // resolve(userCredential.user);
         //* Send verification email
-        verifyEmail();
+        // verifyEmail(url:"");
         //* Add user to database
-        db.collection("users").doc(userCredential.user.uid).set({
-          first_name,
-          last_name,
-          authProvider: "emailAndPassword",
-          email,
-        });
+        db.collection("users")
+          .doc(userCredential.user.uid)
+          .set({
+            first_name,
+            last_name,
+            authProvider: "emailAndPassword",
+            email,
+          })
+          .then(() => {
+            console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
+        resolve(userCredential.user);
       })
       .catch((error) => {
         // return error
