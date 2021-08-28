@@ -19,7 +19,6 @@ if (!firebase.apps.length) {
 
 // const history = window.history;
 const db = firebase.firestore();
-console.log("db fire :>> ", db);
 const auth = firebase.auth();
 
 //* Watch user event

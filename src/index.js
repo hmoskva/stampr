@@ -2,17 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import AuthContext from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import reportWebVitals from "./reportWebVitals";
 import "./utils/firebase";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthContext.Provider>
+    <AuthProvider>
+      <BrowserRouter>
         <App />
-      </AuthContext.Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

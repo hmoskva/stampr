@@ -1,6 +1,5 @@
 export const initialState = {
-  user: localStorage.getItem("user") || {},
-  token: localStorage.getItem("token") || "",
+  ...(JSON.parse(localStorage.getItem("user")) || {}),
 };
 
 const authReducer = (state, action) => {
