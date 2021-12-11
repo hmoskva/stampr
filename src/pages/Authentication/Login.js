@@ -4,7 +4,9 @@ import Input from "../../components/Input/Input";
 import Link from "../../components/Link/Link";
 import Button from "../../components/Button/Button";
 import { useState } from "react";
-import { login, register } from "../../utils/firebase";
+import { auth, login, register, provider } from "../../utils/firebase";
+import loginGoogle from "../../features/userSlice";
+import { useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
 // import AuthContext from "../../contexts/AuthContext";
 // import { useHistory } from "react-router-dom";
@@ -26,12 +28,20 @@ const LoginPage = () => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (showLogin) {
       const { email, password } = credentials;
       login({ email, password })
-        .then(() => {
+        .then(({ user }) => {
+          dispatch(
+            loginGoogle({
+              name: user.displayName,
+              email: user.email,
+            })
+          );
           //success
           // localStorage.setItem("user", JSON.stringify(state));
           // router.push("/");
@@ -43,7 +53,13 @@ const LoginPage = () => {
         });
     } else {
       register(credentials)
-        .then(() => {
+        .then(({ user }) => {
+          dispatch(
+            loginGoogle({
+              name: user.displayName,
+              email: user.email,
+            })
+          );
           //success
           // localStorage.setItem("user", state);
           // router.push("/");
@@ -55,6 +71,21 @@ const LoginPage = () => {
         });
     }
   };
+
+  const googleLogin = () => {
+    auth
+      .signInWithPopup(provider)
+      .then(({ user }) => {
+        dispatch(
+          loginGoogle({
+            name: user.displayName,
+            email: user.email,
+          })
+        );
+      })
+      .catch((error) => alert(error.message));
+  };
+  // console.log(authUser);
 
   const errorBlock = (
     <p className="text-center mt-4 fw-bold text-danger">{error}</p>
@@ -106,6 +137,7 @@ const LoginPage = () => {
         variant="outline-secondary"
         block
         label="Sign up with Google"
+        handleClick={googleLogin}
       ></Button>
       <div className="horizontal-text my-5">
         <span className="text-muted small">or sign up with email</span>

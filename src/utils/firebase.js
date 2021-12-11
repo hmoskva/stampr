@@ -20,6 +20,7 @@ if (!firebase.apps.length) {
 // const history = window.history;
 const db = firebase.firestore();
 const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 //* Watch user event
 // auth.onAuthStateChanged((user) => {
@@ -172,4 +173,5 @@ export const logout = () => {
     });
 };
 
+export { db, auth, provider };
 export default firebase;

@@ -6,6 +6,7 @@ import { logout } from "../../utils/firebase";
 // import AuthContext from "../../contexts/AuthContext";
 // import { useContext } from "react";
 import useAuth from "../../hooks/useAuth";
+import logoutRedux from "../../features/userSlice";
 // import { useContext } from "react";
 // import AuthContext from "../../contexts/AuthContext";
 
@@ -36,7 +37,10 @@ const Header = ({ src, links }) => {
             </p>
             <Button
               variant="danger"
-              handleClick={() => logout()}
+              handleClick={async () => {
+                await logout();
+                // logoutRedux({});
+              }}
               label="Log out"
             />
           </div>
