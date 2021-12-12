@@ -1,27 +1,32 @@
 import PropTypes from "prop-types";
 import styles from "./Link.module.scss";
+import { Link as RouterLink } from "react-router-dom";
 
-const Link = ({ label, link, children, disabled }) => {
+const Link = ({ label, to, children, disabled, className, onClick }) => {
   return (
-    <a
-      to={link}
-      className={`nav-link ${styles.Link} ${disabled ? "disabled" : ""}`}
+    <RouterLink
+      to={to}
+      className={`${className} nav-link ${styles.Link} ${
+        disabled ? "disabled" : ""
+      }`}
+      onClick={onClick ? () => onClick() : () => ({})}
     >
       {children || label}
-    </a>
+    </RouterLink>
   );
 };
 
 Link.propTypes = {
-  children: PropTypes.string,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
   label: PropTypes.string,
-  link: PropTypes.string,
+  to: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 Link.defaultProps = {
   label: "Link",
-  to: "www.google.com",
   disabled: false,
 };
 

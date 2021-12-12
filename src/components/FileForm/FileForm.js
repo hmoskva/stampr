@@ -51,7 +51,7 @@ const FileForm = ({
         </div>
       </div>
       <form className="d-flex flex-column">
-        <Input value={name} onChange={setName} />
+        <Input value={name} onChange={(event) => setName(event.target.value)} />
         <Button
           className="mt-4 fw-little"
           label="Upload This File"
