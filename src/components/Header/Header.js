@@ -3,18 +3,12 @@ import styles from "./Header.module.scss";
 import Button from "../Button/Button";
 import Link from "../Link/Link";
 import { logout } from "../../utils/firebase";
-// import AuthContext from "../../contexts/AuthContext";
-// import { useContext } from "react";
 import useAuth from "../../hooks/useAuth";
-import logoutRedux from "../../features/userSlice";
-// import { useContext } from "react";
-// import AuthContext from "../../contexts/AuthContext";
 
 const Header = ({ src, links }) => {
-  const { user, isAuthenticated } = useAuth();
-  console.log("🚀 ~ Header ~ user", user);
-  console.log("🚀 ~ Header ~ isAuthenticated", isAuthenticated);
-
+  const { user } = useAuth();
+  console.log(`userHEader`, user);
+  const { displayName, email } = user || {};
   return (
     <nav className={`py-4 ${styles.Header}`}>
       <Link to="/" className="p-0">
@@ -30,16 +24,13 @@ const Header = ({ src, links }) => {
         })}
       </ul>
       <div className="d-flex">
-        {isAuthenticated ? (
+        {user?.uid ? (
           <div className="d-flex align-items-center">
-            <p className="small mb-0 me-2">
-              Hello, {user.displayName || user.email}
-            </p>
+            <p className="small mb-0 me-2">Hello, {displayName || email}</p>
             <Button
               variant="danger"
               handleClick={async () => {
                 await logout();
-                // logoutRedux({});
               }}
               label="Log out"
             />

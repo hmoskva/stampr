@@ -130,7 +130,7 @@ export const register = ({ first_name, last_name, email, password }) => {
   });
 };
 
-export const login = ({ email, password }) => {
+export const firebaseLogin = ({ email, password }) => {
   return new Promise((resolve, reject) => {
     auth
       .signInWithEmailAndPassword(email, password)

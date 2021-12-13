@@ -1,11 +1,8 @@
-import AuthContext from "./../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 
 const useAuth = () => {
-  const authContext = useContext(AuthContext);
-  const [isAuthenticated] = useState(!!authContext.state.uid);
-  const [user] = useState(authContext.state);
-  return { user, isAuthenticated };
+  const user = useSelector((state) => state.user.user);
+  return { user };
 };
 
 export default useAuth;
