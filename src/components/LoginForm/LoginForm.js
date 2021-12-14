@@ -4,10 +4,10 @@ import Link from "../Link/Link";
 import Button from "../Button/Button";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { firebaseLogin } from "../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/userSlice";
 import extractUserInfo from "../../utils/extractUserInfo";
+import { firebaseLogin } from "../../services/auth";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");

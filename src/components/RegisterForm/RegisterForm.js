@@ -3,10 +3,10 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { register } from "../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/userSlice";
 import extractUserInfo from "../../utils/extractUserInfo";
+import { register } from "../../services/auth";
 
 const RegisterForm = () => {
   const initialCredentials = {

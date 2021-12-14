@@ -3,9 +3,9 @@ import "./assets/scss/index.scss";
 import IndexPage from "./pages/Index/Index";
 import LoginPage from "./pages/Authentication/Login";
 import { useEffect } from "react";
-import { auth } from "./utils/firebase";
 import { useDispatch } from "react-redux";
 import { login, logout } from "./features/userSlice";
+import { auth } from "./config/firebase";
 
 function App() {
   const router = useHistory();
@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log(`userInAuthListenr`, user);
       if (user) {
         dispatch(
           login({

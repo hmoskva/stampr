@@ -2,10 +2,24 @@ import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import FileUpload from "../../components/FileUpload/FIleUpload";
 import Header from "../../components/Header/Header";
+import useAuth from "../../hooks/useAuth";
+import { saveStamp } from "../../services/stamps";
 import styles from "./Index.module.scss";
 
 const IndexPage = () => {
+  const { user } = useAuth();
   const headerLinks = [];
+
+  const createStamp = async (payload) => {
+    try {
+      const resp = saveStamp(payload);
+      console.log(`resp`, resp);
+      alert("stamp saved");
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  };
+
   return (
     <div className={`container position-relative ${styles.Main}`}>
       <Header links={headerLinks} />
@@ -23,7 +37,12 @@ const IndexPage = () => {
                 <span className="fw-light">
                   Get Premium Account today. Check out our awesome deal
                 </span>
-                <FileUpload className={`${styles.HeroFileUpload} shadow-sm`} />
+                <FileUpload
+                  className={`${styles.HeroFileUpload} shadow-sm`}
+                  handleSuccess={(payload) =>
+                    createStamp({ ...payload, userId: user?.uid })
+                  }
+                />
               </div>
             </div>
           </Card>
