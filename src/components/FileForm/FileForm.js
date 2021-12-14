@@ -3,7 +3,7 @@ import styles from "./FileForm.module.scss";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { useState } from "react";
-import { uploadFile } from "../../utils/firebase";
+import { uploadFile } from "../../config/firebase/helpers";
 
 const FileForm = ({
   file,

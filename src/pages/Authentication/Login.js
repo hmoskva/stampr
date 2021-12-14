@@ -2,12 +2,12 @@ import styles from "./Authentication.module.scss";
 import Link from "../../components/Link/Link";
 import Button from "../../components/Button/Button";
 import { useState } from "react";
-import { auth, provider } from "../../utils/firebase";
 import { login } from "../../features/userSlice";
 import { useDispatch } from "react-redux";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import extractUserInfo from "../../utils/extractUserInfo";
+import { auth, provider } from "../../config/firebase";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);

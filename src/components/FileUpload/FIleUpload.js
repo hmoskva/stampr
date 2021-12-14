@@ -5,7 +5,7 @@ import FileForm from "../FileForm/FileForm";
 import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
 
-const FileUpload = ({ label, sublabel, accept, className }) => {
+const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -42,9 +42,10 @@ const FileUpload = ({ label, sublabel, accept, className }) => {
         <FileForm
           file={file}
           onStartUpload={() => setUploading(true)}
-          onSuccess={() => {
+          onSuccess={(payload) => {
             setShowForm(false);
             setUploading(false);
+            handleSuccess(payload);
           }}
           setProgress={(e) => setProgress(e)}
           setUploadTask={(uploadTask) => (uploadTaskRef.current = uploadTask)}
@@ -74,7 +75,7 @@ const FileUpload = ({ label, sublabel, accept, className }) => {
   return (
     <div className={`${styles.FileUpload} ${className} p-5`}>
       <div
-        className={`d-flex flex-column align-items-center justify-content-center p-5 ${styles.DropContainer}`}
+        className={`d-flex flex-column align-items-center justify-content-center p-5 ${styles.DropContainer} `}
       >
         {renderBody()}
       </div>
@@ -95,6 +96,7 @@ FileUpload.propTypes = {
   sublabel: PropTypes.string,
   accept: PropTypes.string,
   onChange: PropTypes.func,
+  handleSuccess: PropTypes.func,
   className: PropTypes.string,
 };
 
@@ -103,6 +105,7 @@ FileUpload.defaultProps = {
   sublabel: "Browse Files",
   accept: "application/pdf, application/msword, image/*, .doc, .docx",
   onChange: () => ({}),
+  handleSuccess: () => ({}),
 };
 
 export default FileUpload;

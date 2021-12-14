@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import styles from "./Header.module.scss";
 import Button from "../Button/Button";
 import Link from "../Link/Link";
-import { logout } from "../../utils/firebase";
 import useAuth from "../../hooks/useAuth";
+import { logout } from "../../services/auth";
 
 const Header = ({ src, links }) => {
   const { user } = useAuth();
