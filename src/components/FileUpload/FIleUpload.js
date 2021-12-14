@@ -75,7 +75,7 @@ const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
   return (
     <div className={`${styles.FileUpload} ${className} p-5`}>
       <div
-        className={`d-flex flex-column align-items-center justify-content-center p-5 ${styles.DropContainer}`}
+        className={`d-flex flex-column align-items-center justify-content-center p-5 ${styles.DropContainer} `}
       >
         {renderBody()}
       </div>
