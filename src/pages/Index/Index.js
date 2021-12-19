@@ -21,7 +21,6 @@ const IndexPage = () => {
         body.token = token;
       }
       const resp = saveStamp(body);
-      console.log(`resp`, resp);
       alert("stamp saved");
     } catch (error) {
       console.log(`error`, error);
