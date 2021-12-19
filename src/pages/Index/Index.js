@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import useAuth from "../../hooks/useAuth";
 import { saveStamp } from "../../services/stamps";
 import styles from "./Index.module.scss";
+import generateToken from "../../utils/generateToken";
 
 const IndexPage = () => {
   const { user } = useAuth();
@@ -12,8 +13,14 @@ const IndexPage = () => {
 
   const createStamp = async (payload) => {
     try {
-      const resp = saveStamp(payload);
-      console.log(`resp`, resp);
+      const body = { ...payload };
+      let token = localStorage.getItem("noAuthToken") || generateToken();
+
+      if (!user?.uid) {
+        localStorage.setItem("noAuthToken", token);
+        body.token = token;
+      }
+      const resp = saveStamp(body);
       alert("stamp saved");
     } catch (error) {
       console.log(`error`, error);
@@ -40,7 +47,10 @@ const IndexPage = () => {
                 <FileUpload
                   className={`${styles.HeroFileUpload} shadow-sm`}
                   handleSuccess={(payload) =>
-                    createStamp({ ...payload, userId: user?.uid })
+                    createStamp({
+                      ...payload,
+                      userId: user?.uid || "",
+                    })
                   }
                 />
               </div>

@@ -25,7 +25,7 @@ function App() {
         router.push("/");
       } else {
         dispatch(logout());
-        router.push("/login");
+        // router.push("/login");
       }
     });
   }, []);
