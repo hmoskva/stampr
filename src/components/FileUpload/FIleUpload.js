@@ -1,11 +1,21 @@
 import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./FileUpload.module.scss";
 import FileForm from "../FileForm/FileForm";
 import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
 
-const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
+const FILE_SIZE_LIMIT = 100;
+
+const FileUpload = ({
+  label,
+  sublabel,
+  accept,
+  className,
+  handleSuccess,
+  onFileChange,
+  canUpload = true,
+}) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -14,6 +24,12 @@ const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
 
   const inputRef = useRef(null);
   const uploadTaskRef = useRef(null);
+
+  useEffect(() => {
+    if (!canUpload) {
+      setShowForm(false);
+    }
+  }, [canUpload]);
 
   const handlePause = () => {
     if (uploadTaskRef.current) {
@@ -41,6 +57,7 @@ const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
       return (
         <FileForm
           file={file}
+          canUpload={canUpload}
           onStartUpload={() => setUploading(true)}
           onSuccess={(payload) => {
             setShowForm(false);
@@ -68,8 +85,17 @@ const FileUpload = ({ label, sublabel, accept, className, handleSuccess }) => {
 
   const handleFileChange = (e) => {
     const [file] = e.target.files;
-    setFile(file);
-    setShowForm(true);
+    const fileSize = file.size / 1000;
+    console.log(`fileSize`, fileSize);
+    if (fileSize <= FILE_SIZE_LIMIT) {
+      setFile(file);
+      setShowForm(true);
+      if (onFileChange) {
+        onFileChange(fileSize);
+      }
+    } else {
+      alert("File too large");
+    }
   };
 
   return (
@@ -97,7 +123,9 @@ FileUpload.propTypes = {
   accept: PropTypes.string,
   onChange: PropTypes.func,
   handleSuccess: PropTypes.func,
+  onFileChange: PropTypes.func,
   className: PropTypes.string,
+  canUpload: PropTypes.bool,
 };
 
 FileUpload.defaultProps = {

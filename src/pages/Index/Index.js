@@ -3,12 +3,18 @@ import Card from "../../components/Card/Card";
 import FileUpload from "../../components/FileUpload/FIleUpload";
 import Header from "../../components/Header/Header";
 import useAuth from "../../hooks/useAuth";
-import { saveStamp } from "../../services/stamps";
+import { getStorageUsage, saveStamp } from "../../services/stamps";
 import styles from "./Index.module.scss";
 import generateToken from "../../utils/generateToken";
+import { useState } from "react";
+
+const FILE_LIMIT = 100;
 
 const IndexPage = () => {
   const { user } = useAuth();
+
+  const [canUpload, setCanUpload] = useState(true);
+
   const headerLinks = [];
 
   const createStamp = async (payload) => {
@@ -20,8 +26,22 @@ const IndexPage = () => {
         localStorage.setItem("noAuthToken", token);
         body.token = token;
       }
-      const resp = saveStamp(body);
+      await saveStamp(body);
       alert("stamp saved");
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  };
+
+  const checkFileLimit = async (size) => {
+    const token = localStorage.getItem("noAuthToken");
+    if (user?.uid || !token) return;
+    try {
+      setCanUpload(false);
+      const totalStorage = await getStorageUsage(token);
+      const allowUpload = totalStorage + size <= FILE_LIMIT;
+      setCanUpload(allowUpload);
+      if (!allowUpload) alert("Limit Exceeded");
     } catch (error) {
       console.log(`error`, error);
     }
@@ -52,6 +72,8 @@ const IndexPage = () => {
                       userId: user?.uid || "",
                     })
                   }
+                  canUpload={canUpload}
+                  onFileChange={(size) => checkFileLimit(size)}
                 />
               </div>
             </div>

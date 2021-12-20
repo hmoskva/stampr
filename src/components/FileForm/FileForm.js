@@ -11,6 +11,7 @@ const FileForm = ({
   onSuccess,
   setProgress,
   setUploadTask,
+  canUpload,
 }) => {
   const [name, setName] = useState(file.name);
 
@@ -55,6 +56,7 @@ const FileForm = ({
         <Button
           className="mt-4 fw-little"
           label="Upload This File"
+          disabled={!canUpload}
           handleClick={handleUpload}
         />
       </form>
@@ -68,6 +70,7 @@ FileForm.propTypes = {
   onSuccess: PropTypes.func,
   setProgress: PropTypes.func,
   setUploadTask: PropTypes.func,
+  canUpload: PropTypes.bool,
 };
 
 export default FileForm;
