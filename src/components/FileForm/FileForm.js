@@ -4,6 +4,7 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { useState } from "react";
 import { uploadFile } from "../../config/firebase/helpers";
+import fileSize from "../../utils/fileSize";
 
 const FileForm = ({
   file,
@@ -32,7 +33,7 @@ const FileForm = ({
         onSuccess({
           url: uploadedUrl,
           name,
-          size: file.size / 1000,
+          size: fileSize(file.size),
         });
       }
     } catch (error) {
@@ -48,7 +49,7 @@ const FileForm = ({
         />
         <div className="d-flex flex-column">
           <span className={styles.FormTitle}>{name}</span>
-          <span className={styles.FormSubtitle}>{file.size / 1000} KB</span>
+          <span className={styles.FormSubtitle}>{fileSize(file.size)} KB</span>
         </div>
       </div>
       <form className="d-flex flex-column">

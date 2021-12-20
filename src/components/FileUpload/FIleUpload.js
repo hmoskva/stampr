@@ -4,6 +4,7 @@ import styles from "./FileUpload.module.scss";
 import FileForm from "../FileForm/FileForm";
 import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
+import fileSize from "../../utils/fileSize";
 
 const FILE_SIZE_LIMIT = 100;
 
@@ -85,13 +86,13 @@ const FileUpload = ({
 
   const handleFileChange = (e) => {
     const [file] = e.target.files;
-    const fileSize = file.size / 1000;
-    console.log(`fileSize`, fileSize);
-    if (fileSize <= FILE_SIZE_LIMIT) {
+    const size = fileSize(file.size);
+    console.log(`fileSize`, size);
+    if (size <= FILE_SIZE_LIMIT) {
       setFile(file);
       setShowForm(true);
       if (onFileChange) {
-        onFileChange(fileSize);
+        onFileChange(size);
       }
     } else {
       alert("File too large");
