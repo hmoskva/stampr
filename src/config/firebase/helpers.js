@@ -1,8 +1,8 @@
 import { storage } from ".";
 
-export const applyUserFilter = (userId, query) => {
+export const applyUserFilter = (userId, query, key = "userId") => {
   if (userId) {
-    query.where("userId", "==", userId);
+    query.where(key, "==", userId);
   }
 };
 
