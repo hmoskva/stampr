@@ -27,6 +27,7 @@ const IndexPage = () => {
         body.token = token;
       }
       await saveStamp(body);
+      // todo toast
       alert("stamp saved");
     } catch (error) {
       console.log(`error`, error);
@@ -41,7 +42,7 @@ const IndexPage = () => {
       const totalStorage = await getStorageUsage(token);
       const allowUpload = totalStorage + size <= FILE_LIMIT;
       setCanUpload(allowUpload);
-      if (!allowUpload) alert("Limit Exceeded");
+      if (!allowUpload) alert("Limit exceeded"); // todo toast
     } catch (error) {
       console.log(`error`, error);
     }

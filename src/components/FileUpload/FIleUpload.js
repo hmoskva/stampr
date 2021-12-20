@@ -95,6 +95,7 @@ const FileUpload = ({
         onFileChange(size);
       }
     } else {
+      // todo toast
       alert("File too large");
     }
   };
