@@ -1,6 +1,11 @@
 import { db } from "../config/firebase";
 import { STAMPS } from "../config/firebase/collections";
 import { applyUserFilter } from "../config/firebase/helpers";
+import api from "../config/axios";
+
+export const stampDocument = (payload) => {
+  return api.post(``, payload);
+};
 
 export const saveStamp = (payload) => {
   return db.collection(STAMPS).doc(payload.uid).set(payload);
