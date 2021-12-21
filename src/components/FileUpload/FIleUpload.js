@@ -6,7 +6,7 @@ import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
 import fileSize from "../../utils/fileSize";
 
-const FILE_SIZE_LIMIT = 100;
+const FILE_SIZE_LIMIT = 10000;
 
 const FileUpload = ({
   label,
@@ -15,7 +15,6 @@ const FileUpload = ({
   className,
   handleSuccess,
   onFileChange,
-  canUpload = true,
 }) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState({});
@@ -25,12 +24,6 @@ const FileUpload = ({
 
   const inputRef = useRef(null);
   const uploadTaskRef = useRef(null);
-
-  useEffect(() => {
-    if (!canUpload) {
-      setShowForm(false);
-    }
-  }, [canUpload]);
 
   const handlePause = () => {
     if (uploadTaskRef.current) {
@@ -58,12 +51,12 @@ const FileUpload = ({
       return (
         <FileForm
           file={file}
-          canUpload={canUpload}
           onStartUpload={() => setUploading(true)}
           onSuccess={(payload) => {
+            console.log("FILEFORMSUCCESS");
             setShowForm(false);
             setUploading(false);
-            handleSuccess(payload);
+            handleSuccess({ ...payload, documentUrl: payload.url });
           }}
           setProgress={(e) => setProgress(e)}
           setUploadTask={(uploadTask) => (uploadTaskRef.current = uploadTask)}
@@ -87,8 +80,9 @@ const FileUpload = ({
   const handleFileChange = (e) => {
     const [file] = e.target.files;
     const size = fileSize(file.size);
-    console.log(`fileSize`, size);
+
     if (size <= FILE_SIZE_LIMIT) {
+      console.log(`fileSizeeee`, size);
       setFile(file);
       setShowForm(true);
       if (onFileChange) {
@@ -127,7 +121,6 @@ FileUpload.propTypes = {
   handleSuccess: PropTypes.func,
   onFileChange: PropTypes.func,
   className: PropTypes.string,
-  canUpload: PropTypes.bool,
 };
 
 FileUpload.defaultProps = {

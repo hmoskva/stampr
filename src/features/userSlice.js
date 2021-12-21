@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
+  canUpload: true,
 };
 
 export const userSlice = createSlice({
@@ -14,10 +15,13 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
+    setCanUpload: (state, action) => {
+      state.canUpload = action.payload;
+    },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setCanUpload } = userSlice.actions;
 
 export const authUser = (state) => state.user.user;
 export const isAuthenticated = (state) => !!state.user?.user?.uid;

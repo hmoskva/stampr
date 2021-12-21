@@ -3,17 +3,30 @@ import Card from "../../components/Card/Card";
 import FileUpload from "../../components/FileUpload/FIleUpload";
 import Header from "../../components/Header/Header";
 import useAuth from "../../hooks/useAuth";
-import { getStorageUsage, saveStamp } from "../../services/stamps";
+import {
+  getStorageUsage,
+  saveStamp,
+  stampDocument,
+} from "../../services/stamps";
 import styles from "./Index.module.scss";
 import generateToken from "../../utils/generateToken";
 import { useState } from "react";
+import StampPositioner from "../../components/StampPositioner/StampPositioner";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDispatch } from "react-redux";
+import { setCanUpload } from "../../features/userSlice";
 
-const FILE_LIMIT = 100;
+const FILE_LIMIT = 100000;
 
 const IndexPage = () => {
   const { user } = useAuth();
 
-  const [canUpload, setCanUpload] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
+  const [docPreview, setDocPreview] = useState({});
+  const { documentUrl, stampUrl } = docPreview;
+
+  const dispatch = useDispatch();
 
   const headerLinks = [];
 
@@ -26,11 +39,16 @@ const IndexPage = () => {
         localStorage.setItem("noAuthToken", token);
         body.token = token;
       }
-      await saveStamp(body);
+      const resp = await stampDocument(body);
+      if (resp.status === 200) {
+        await saveStamp({ ...body, stampedUrl: resp.data.stamped_url });
+      }
+
       // todo toast
       alert("stamp saved");
     } catch (error) {
       console.log(`error`, error);
+      throw error;
     }
   };
 
@@ -38,10 +56,9 @@ const IndexPage = () => {
     const token = localStorage.getItem("noAuthToken");
     if (user?.uid || !token) return;
     try {
-      setCanUpload(false);
       const totalStorage = await getStorageUsage(token);
       const allowUpload = totalStorage + size <= FILE_LIMIT;
-      setCanUpload(allowUpload);
+      dispatch(setCanUpload(allowUpload));
       if (!allowUpload) alert("Limit exceeded"); // todo toast
     } catch (error) {
       console.log(`error`, error);
@@ -49,56 +66,72 @@ const IndexPage = () => {
   };
 
   return (
-    <div className={`container position-relative ${styles.Main}`}>
-      <Header links={headerLinks} />
-      <div className="row mt-3 mb-5 mb-md-0">
-        <div className="col-12">
-          <Card
-            className={`${styles.Hero} py-5 px-3 px-md-5`}
-            bgColor="#ace4da45"
-          >
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-6 text-center text-primary">
-                <h2 className="fw-bold mb-3 px-3 px-md-0">
-                  Secure Cloud Storage & Communication
-                </h2>
-                <span className="fw-light">
-                  Get Premium Account today. Check out our awesome deal
-                </span>
-                <FileUpload
-                  className={`${styles.HeroFileUpload} shadow-sm`}
-                  handleSuccess={(payload) =>
-                    createStamp({
-                      ...payload,
-                      userId: user?.uid || "",
-                    })
-                  }
-                  canUpload={canUpload}
-                  onFileChange={(size) => checkFileLimit(size)}
-                />
+    <DndProvider backend={HTML5Backend}>
+      <div className={`container position-relative ${styles.Main}`}>
+        <Header links={headerLinks} />
+        <div className="row mt-3 mb-5 mb-md-0">
+          <div className="col-12">
+            <Card
+              className={`${styles.Hero} py-5 px-3 px-md-5`}
+              bgColor="#ace4da45"
+            >
+              <div className="row justify-content-center">
+                <div className="col-12 col-md-6 text-center text-primary">
+                  <h2 className="fw-bold mb-3 px-3 px-md-0">
+                    Secure Cloud Storage & Communication
+                  </h2>
+                  <span className="fw-light">
+                    Get Premium Account today. Check out our awesome deal
+                  </span>
+                  <FileUpload
+                    className={`${styles.HeroFileUpload} shadow-sm`}
+                    handleSuccess={(payload) => {
+                      setDocPreview({
+                        ...payload,
+                        stampUrl:
+                          "https://firebasestorage.googleapis.com/v0/b/portfolio-faed7.appspot.com/o/First%20Active%20CRM%20Assets%2Fstamp-nobg.png?alt=media&token=18af7cb4-2843-4ed2-b0e3-e4ff8952d7f7",
+                      });
+                      setShowPreview(true);
+                    }}
+                    onFileChange={(size) => checkFileLimit(size)}
+                  />
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
         </div>
-      </div>
-      <div className={`row justify-content-center ${styles.FooterCard}`}>
-        <div className="col-12 col-md-6 ">
-          <Card
-            bgColor="#ff76762e"
-            className="py-5 px-3 px-md-5 d-flex justify-content-between align-items-center flex-column flex-md-row"
-          >
-            <span className="text-primary">
-              Do you want 50GB Free* storage?
-            </span>
+        <div className={`row justify-content-center ${styles.FooterCard}`}>
+          <div className="col-12 col-md-6 ">
+            <Card
+              bgColor="#ff76762e"
+              className="py-5 px-3 px-md-5 d-flex justify-content-between align-items-center flex-column flex-md-row"
+            >
+              <span className="text-primary">
+                Do you want 50GB Free* storage?
+              </span>
 
-            <Button
-              label="Create An Account"
-              className="fw-little mt-3 mt-md-0"
-            />
-          </Card>
+              <Button
+                label="Create An Account"
+                className="fw-little mt-3 mt-md-0"
+              />
+            </Card>
+          </div>
         </div>
+        <StampPositioner
+          stamp={stampUrl}
+          doc={documentUrl}
+          show={showPreview}
+          handleHide={() => setShowPreview(false)}
+          handleSubmit={(stampPosition) =>
+            createStamp({
+              ...docPreview,
+              ...stampPosition,
+              userId: user?.uid || "",
+            })
+          }
+        />
       </div>
-    </div>
+    </DndProvider>
   );
 };
 

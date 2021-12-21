@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import { useState } from "react";
 import { uploadFile } from "../../config/firebase/helpers";
 import fileSize from "../../utils/fileSize";
+import { useSelector } from "react-redux";
 
 const FileForm = ({
   file,
@@ -12,9 +13,9 @@ const FileForm = ({
   onSuccess,
   setProgress,
   setUploadTask,
-  canUpload,
 }) => {
   const [name, setName] = useState(file.name);
+  const canUpload = useSelector((state) => state.user.canUpload);
 
   const handleUpload = async () => {
     try {
@@ -31,6 +32,7 @@ const FileForm = ({
       });
       if (onSuccess) {
         onSuccess({
+          documentId: new Date().getTime(),
           url: uploadedUrl,
           name,
           size: fileSize(file.size),
@@ -71,7 +73,6 @@ FileForm.propTypes = {
   onSuccess: PropTypes.func,
   setProgress: PropTypes.func,
   setUploadTask: PropTypes.func,
-  canUpload: PropTypes.bool,
 };
 
 export default FileForm;
