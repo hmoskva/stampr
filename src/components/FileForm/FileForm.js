@@ -6,8 +6,10 @@ import { useState } from "react";
 import { uploadFile } from "../../config/firebase/helpers";
 import fileSize from "../../utils/fileSize";
 import { useSelector } from "react-redux";
+import { truncate } from "../../utils/truncate.js";
 
 const FileForm = ({
+  btnLabel = "Upload Stamp",
   file,
   onStartUpload,
   onSuccess,
@@ -44,13 +46,15 @@ const FileForm = ({
   };
   return (
     <div className="w-100">
-      <div className={`d-flex mb-3 w-100 align-items-center`}>
+      <div
+        className={`d-flex mb-3 w-100 align-items-center justify-content-start`}
+      >
         <img
           className={styles.Image}
           src="https://image.shutterstock.com/image-vector/folder-icon-symbol-flat-style-260nw-1475533136.jpg"
         />
         <div className="d-flex flex-column">
-          <span className={styles.FormTitle}>{name}</span>
+          <span className={styles.FormTitle}>{truncate(name, 20, "...")}</span>
           <span className={styles.FormSubtitle}>{fileSize(file.size)} KB</span>
         </div>
       </div>
@@ -58,7 +62,7 @@ const FileForm = ({
         <Input value={name} onChange={(event) => setName(event.target.value)} />
         <Button
           className="mt-4 fw-little"
-          label="Upload This File"
+          label={btnLabel}
           disabled={!canUpload}
           handleClick={handleUpload}
         />
@@ -69,10 +73,14 @@ const FileForm = ({
 
 FileForm.propTypes = {
   file: PropTypes.object,
+  // doc: PropTypes.object,
+  // stamp: PropTypes.object,
   onStartUpload: PropTypes.func,
   onSuccess: PropTypes.func,
   setProgress: PropTypes.func,
   setUploadTask: PropTypes.func,
+  btnLabel: PropTypes.string,
+  // onUploadStamp: PropTypes.func,
 };
 
 export default FileForm;

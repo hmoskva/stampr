@@ -5,6 +5,7 @@ import FileForm from "../FileForm/FileForm";
 import ProgressRing from "../ProgressRing/ProgressRing";
 import Icon from "../Icon/Icon";
 import fileSize from "../../utils/fileSize";
+import Button from "../Button/Button";
 
 const FILE_SIZE_LIMIT = 10000;
 
@@ -18,9 +19,14 @@ const FileUpload = ({
 }) => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState({});
+  const [doc, setDoc] = useState({});
+  const [stamp, setStamp] = useState({});
+  // const [isDocUploaded, setIsDocUploaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  const displayLabel = doc.documentId ? "Upload Stamp" : "Upload Document";
 
   const inputRef = useRef(null);
   const uploadTaskRef = useRef(null);
@@ -38,12 +44,27 @@ const FileUpload = ({
     }
   };
 
+  const handleUploadSuccess = (payload) => {
+    console.log("FILEFORMSUCCESS");
+    if (!doc.documentId) {
+      setDoc(payload);
+      setUploading(false);
+      setShowForm(false);
+      // handleSuccess({ ...payload, documentUrl: payload.url });
+    } else {
+      console.log("payload :>> ", payload);
+      setStamp(payload);
+      setUploading(false);
+      handleSuccess({ ...doc, documentUrl: doc.url, stampUrl: payload.url });
+    }
+  };
+
   const renderBody = () => {
     if (uploading) {
       return (
         <div className="d-flex justify-content-between align-items-center w-100">
           <Icon icon="pause" onClick={handlePause} />
-          <ProgressRing progress={isPaused ? "Paused" : progress} size={190} />
+          <ProgressRing progress={isPaused ? "Paused" : progress} size={200} />
           <Icon icon="play" onClick={handlePlay} />
         </div>
       );
@@ -51,13 +72,9 @@ const FileUpload = ({
       return (
         <FileForm
           file={file}
+          btnLabel={"Upload"}
           onStartUpload={() => setUploading(true)}
-          onSuccess={(payload) => {
-            console.log("FILEFORMSUCCESS");
-            setShowForm(false);
-            setUploading(false);
-            handleSuccess({ ...payload, documentUrl: payload.url });
-          }}
+          onSuccess={(payload) => handleUploadSuccess(payload)}
           setProgress={(e) => setProgress(e)}
           setUploadTask={(uploadTask) => (uploadTaskRef.current = uploadTask)}
         />
@@ -66,7 +83,12 @@ const FileUpload = ({
     return (
       <>
         <span className="d-block mb-5">{label}</span>
-        <span onClick={handleInputClick}>{sublabel}</span>
+        <Button
+          className="mt-4 fw-little"
+          label={displayLabel}
+          handleClick={handleInputClick}
+        />
+        {/* <span onClick={handleInputClick}>{displayLabel}</span> */}
       </>
     );
   };
@@ -85,7 +107,7 @@ const FileUpload = ({
       console.log(`fileSizeeee`, size);
       setFile(file);
       setShowForm(true);
-      if (onFileChange) {
+      if (onFileChange && !doc.documentId) {
         onFileChange(size);
       }
     } else {
