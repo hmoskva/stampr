@@ -8,6 +8,7 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import extractUserInfo from "../../utils/extractUserInfo";
 import { auth, provider } from "../../config/firebase";
+import logoSrc from "../../assets/images/logo.svg";
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -25,6 +26,9 @@ const LoginPage = () => {
 
   const form = (
     <>
+      <Link to="/">
+        <img className="mb-5" height="40" src={logoSrc} alt="" />
+      </Link>
       <h1 className="my-auto fw-bold">{showLogin ? "Login" : "Register"}</h1>
       <p className="mb-4 mt-2">{showLogin ? "" : "Let's get you started!"}</p>
       <Button
