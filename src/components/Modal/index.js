@@ -54,7 +54,7 @@ const Modal = ({
 export default Modal;
 
 Modal.propTypes = {
-  scrollable: PropTypes.string,
+  scrollable: PropTypes.bool,
   show: PropTypes.bool,
   fullscreen: PropTypes.bool,
   customClass: PropTypes.string,

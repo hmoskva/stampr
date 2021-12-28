@@ -15,7 +15,10 @@ const Card = (props) => {
 Card.propTypes = {
   bgColor: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 };
 
 export default Card;

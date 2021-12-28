@@ -86,10 +86,9 @@ const IndexPage = () => {
                   <FileUpload
                     className={`${styles.HeroFileUpload} shadow-sm`}
                     handleSuccess={(payload) => {
+                      console.log(payload, "OUTSIDE");
                       setDocPreview({
                         ...payload,
-                        stampUrl:
-                          "https://firebasestorage.googleapis.com/v0/b/portfolio-faed7.appspot.com/o/First%20Active%20CRM%20Assets%2Fstamp-nobg.png?alt=media&token=18af7cb4-2843-4ed2-b0e3-e4ff8952d7f7",
                       });
                       setShowPreview(true);
                     }}
