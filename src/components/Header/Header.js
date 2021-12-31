@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import Link from "../Link/Link";
 import useAuth from "../../hooks/useAuth";
 import { logout } from "../../services/auth";
+import logoSrc from "../../assets/images/logo.svg";
 
 const Header = ({ src, links }) => {
   const { user } = useAuth();
@@ -12,7 +13,7 @@ const Header = ({ src, links }) => {
   return (
     <nav className={`py-4 ${styles.Header}`}>
       <Link to="/" className="p-0">
-        <img height="30" src={src} />
+        <img height="45" src={src} />
       </Link>
       <ul className="nav">
         {links.map(({ text, link }, index) => {
@@ -52,7 +53,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  src: "https://b2b.talkspace.com/hs-fs/hubfs/TS_nav_logo-1.png?width=2540&name=TS_nav_logo-1.png",
+  src: logoSrc,
   links: [
     { text: "Home", link: "" },
     { text: "Princing", link: "" },

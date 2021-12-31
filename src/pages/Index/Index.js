@@ -2,6 +2,7 @@ import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import FileUpload from "../../components/FileUpload/FIleUpload";
 import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import useAuth from "../../hooks/useAuth";
 import {
   getStorageUsage,
@@ -78,7 +79,7 @@ const IndexPage = () => {
               <div className="row justify-content-center">
                 <div className="col-12 col-md-6 text-center text-primary">
                   <h2 className="fw-bold mb-3 px-3 px-md-0">
-                    Secure Cloud Storage & Communication
+                    Secure File Upload <br /> Storage & Stamp
                   </h2>
                   <span className="fw-light">
                     Get Premium Account today. Check out our awesome deal
@@ -105,7 +106,7 @@ const IndexPage = () => {
               className="py-5 px-3 px-md-5 d-flex justify-content-between align-items-center flex-column flex-md-row"
             >
               <span className="text-primary">
-                Do you want 50GB Free* storage?
+                Do you want 10MB Free* storage?
               </span>
 
               <Button
@@ -113,6 +114,9 @@ const IndexPage = () => {
                 className="fw-little mt-3 mt-md-0"
               />
             </Card>
+          </div>
+          <div className="col-12">
+            <Footer />
           </div>
         </div>
         <StampPositioner
