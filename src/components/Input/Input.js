@@ -1,9 +1,18 @@
 import PropTypes from "prop-types";
 import styles from "./Input.module.scss";
 
-const Input = ({ name, type, label, value, onChange, id, placeholder }) => {
+const Input = ({
+  name,
+  type,
+  label,
+  value,
+  onChange,
+  id,
+  placeholder,
+  customClass,
+}) => {
   return (
-    <>
+    <div className={customClass}>
       <label htmlFor={id} className="form-label">
         {label}
       </label>
@@ -16,7 +25,7 @@ const Input = ({ name, type, label, value, onChange, id, placeholder }) => {
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
       />
-    </>
+    </div>
   );
 };
 
@@ -28,6 +37,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  customClass: PropTypes.string,
 };
 
 export default Input;

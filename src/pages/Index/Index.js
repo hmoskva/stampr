@@ -45,7 +45,7 @@ const IndexPage = () => {
       }
 
       // todo toast
-      alert("stamp saved");
+      alert(`stamp saved -> ${resp?.data?.stamped_url}`);
     } catch (error) {
       console.log(`error`, error);
       throw error;
@@ -86,7 +86,6 @@ const IndexPage = () => {
                   <FileUpload
                     className={`${styles.HeroFileUpload} shadow-sm`}
                     handleSuccess={(payload) => {
-                      console.log(payload, "OUTSIDE");
                       setDocPreview({
                         ...payload,
                       });
@@ -121,11 +120,14 @@ const IndexPage = () => {
           doc={documentUrl}
           show={showPreview}
           handleHide={() => setShowPreview(false)}
-          handleSubmit={(stampPosition) =>
+          handleSubmit={({ stampPosition, width, height, customText }) =>
             createStamp({
               ...docPreview,
               ...stampPosition,
               userId: user?.uid || "",
+              width,
+              height,
+              customText,
             })
           }
         />

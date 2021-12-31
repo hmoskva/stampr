@@ -2,51 +2,30 @@ import React, { useRef, useState } from "react";
 import styles from "./StampPositioner.module.scss";
 import PropTypes from "prop-types";
 import Modal from "../Modal";
-import { useDrop, useDrag } from "react-dnd";
-import { DragItemTypes } from "../../utils/constants";
 import Button from "../Button/Button";
+import DocumentPreview from "./DocumentPreview";
+import StampPreview from "./StampPreview";
+import Input from "../Input/Input";
 
 const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
-  const { base, base__wrapper, base__wrapper__doc, base__wrapper__stamp } =
-    styles;
+  const { base, base__wrapper } = styles;
 
   const [stampPosition, setStampPosition] = useState({ x: 10, y: 10 });
   const [submitting, setSubmitting] = useState(false);
+  const [customText, setCustomText] = useState("");
+  const [width, setWidth] = useState(120); // todo: use default image width/height or default 120
+  const [height, setHeight] = useState(120);
   const docRef = useRef(null);
-
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: DragItemTypes.STAMP,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
-
-  const [{ isOver, canDrop }, drop] = useDrop(
-    () => ({
-      accept: DragItemTypes.STAMP,
-      drop: (item, monitor) => {
-        const offset = monitor.getSourceClientOffset();
-        if (offset) {
-          const dropTargetXy = docRef.current.getBoundingClientRect();
-          setStampPosition({
-            x: offset.x - dropTargetXy.left,
-            y: offset.y - dropTargetXy.top,
-          });
-        }
-      },
-      canDrop: () => true,
-      collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        canDrop: !!monitor.canDrop(),
-      }),
-    }),
-    []
-  );
 
   const submit = async () => {
     try {
       setSubmitting(true);
-      const resp = await handleSubmit(stampPosition);
+      await handleSubmit({
+        stampPosition,
+        customText,
+        width,
+        height,
+      });
       setSubmitting(false);
       handleHide();
     } catch (error) {
@@ -66,34 +45,50 @@ const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
       title="Position your stamp"
     >
       <div className={base}>
-        <Button
-          label="Let's Go"
-          className="fw-little mb-5 mx-auto"
-          disabled={submitting}
-          handleClick={submit}
-        />
-        <div className={base__wrapper}>
-          <div ref={docRef}>
-            <img
-              src={doc}
-              className={base__wrapper__doc}
-              ref={drop}
-              style={{
-                border: isOver ? "1px dashed red" : "none",
-              }}
+        <div className="d-flex justify-content-center">
+          <div className={base__wrapper}>
+            <DocumentPreview
+              ref={docRef}
+              document={doc}
+              handleDrop={(position) => setStampPosition(position)}
+            />
+            <StampPreview
+              stamp={stamp}
+              width={width}
+              height={height}
+              customText={customText}
+              stampPosition={stampPosition}
             />
           </div>
-          <img
-            src={stamp}
-            className={base__wrapper__stamp}
-            ref={drag}
-            style={{
-              opacity: isDragging ? 0.2 : 1,
-              cursor: "move",
-              left: stampPosition.x,
-              top: stampPosition.y,
-            }}
-          />
+          <div>
+            <div className="d-flex">
+              <Input
+                placeholder="Stamp Width"
+                value={width}
+                onChange={(event) => setWidth(event.target.value)}
+              />
+              <Input
+                customClass="mx-2"
+                placeholder="Stamp Height"
+                value={height}
+                onChange={(event) => setHeight(event.target.value)}
+              />
+            </div>
+
+            <div>
+              <Input
+                placeholder="Custom Text"
+                value={customText}
+                onChange={(event) => setCustomText(event.target.value)}
+              />
+              <Button
+                label="Let's Go"
+                className="fw-little mb-5 mx-auto mt-4"
+                disabled={submitting}
+                handleClick={submit}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Modal>
