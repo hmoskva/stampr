@@ -3,25 +3,15 @@
 .base {
   width: 100%;
   text-align: center;
+  margin-top: 50px;
 
   &__wrapper {
     position: relative;
     height: 100%;
     display: table;
-    margin: auto;
+    margin-right: 40px;
 
-    &__doc {
-      max-height: 800px;
-      max-width: 1024px;
-      object-fit: contain;
-      padding-bottom: 35px;
-    }
-
-    &__stamp {
-      position: absolute;
-      cursor: grab;
-      width: 120px;
-      height: 120px;
+    &__controls {
     }
   }
 }

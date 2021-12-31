@@ -56,6 +56,9 @@ const FileUpload = ({
       setStamp(payload);
       setUploading(false);
       handleSuccess({ ...doc, documentUrl: doc.url, stampUrl: payload.url });
+      setShowForm(false);
+      setDoc({});
+      setStamp({});
     }
   };
 
