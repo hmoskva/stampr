@@ -20,7 +20,7 @@ const Input = ({
         id={id}
         type={type}
         name={name}
-        className={`${styles.Input} form-control mb-3`}
+        className={`${styles.Input} form-control mb-4`}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
@@ -35,7 +35,7 @@ Input.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   customClass: PropTypes.string,
 };

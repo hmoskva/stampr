@@ -4,7 +4,14 @@ import { useDrag } from "react-dnd";
 import { DragItemTypes } from "../../../utils/constants";
 import styles from "./StampPreview.module.scss";
 
-const StampPreview = ({ stamp, customText, stampPosition, width, height }) => {
+const StampPreview = ({
+  stamp,
+  customText,
+  stampPosition,
+  width,
+  height,
+  color,
+}) => {
   const { wrapper, wrapper__text } = styles;
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -25,7 +32,9 @@ const StampPreview = ({ stamp, customText, stampPosition, width, height }) => {
       className={wrapper}
     >
       <img src={stamp} height={height} width={width} />
-      <div className={wrapper__text}>{customText} </div>
+      <div className={wrapper__text} style={{ color }}>
+        {customText}
+      </div>
     </div>
   );
 };
@@ -41,4 +50,5 @@ StampPreview.propTypes = {
   }),
   width: PropTypes.number,
   height: PropTypes.number,
+  color: PropTypes.string,
 };

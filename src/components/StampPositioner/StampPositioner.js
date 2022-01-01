@@ -6,12 +6,14 @@ import Button from "../Button/Button";
 import DocumentPreview from "./DocumentPreview";
 import StampPreview from "./StampPreview";
 import Input from "../Input/Input";
+import ColorPicker from "../ColorPicker/ColorPicker";
 
 const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
   const { base, base__wrapper } = styles;
 
   const [stampPosition, setStampPosition] = useState({ x: 10, y: 10 });
   const [submitting, setSubmitting] = useState(false);
+  const [color, setColor] = useState("#fff  ");
   const [customText, setCustomText] = useState("");
   const [width, setWidth] = useState(120); // todo: use default image width/height or default 120
   const [height, setHeight] = useState(120);
@@ -25,6 +27,7 @@ const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
         customText,
         width,
         height,
+        color,
       });
       setSubmitting(false);
       handleHide();
@@ -58,18 +61,21 @@ const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
               height={height}
               customText={customText}
               stampPosition={stampPosition}
+              color={color}
             />
           </div>
           <div>
             <div className="d-flex">
               <Input
-                placeholder="Stamp Width"
+                label="Stamp Width"
+                placeholder="Enter value"
                 value={width}
                 onChange={(event) => setWidth(event.target.value)}
               />
               <Input
+                label="Stamp Height"
                 customClass="mx-2"
-                placeholder="Stamp Height"
+                placeholder="Enter value"
                 value={height}
                 onChange={(event) => setHeight(event.target.value)}
               />
@@ -77,13 +83,19 @@ const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
 
             <div>
               <Input
+                label="Custom Text"
                 placeholder="Custom Text"
                 value={customText}
                 onChange={(event) => setCustomText(event.target.value)}
               />
+              <ColorPicker
+                // className="mt-5"
+                value={color}
+                onChange={(event) => setColor(event.target.value)}
+              />
               <Button
                 label="Let's Go"
-                className="fw-little mb-5 mx-auto mt-4"
+                className="fw-little mb-5 mx-auto mt-5"
                 disabled={submitting}
                 handleClick={submit}
               />

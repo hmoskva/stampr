@@ -8,7 +8,6 @@ import logoSrc from "../../assets/images/logo.svg";
 
 const Header = ({ src, links }) => {
   const { user } = useAuth();
-  console.log(`userHEader`, user);
   const { displayName, email } = user || {};
   return (
     <nav className={`py-4 ${styles.Header}`}>
