@@ -101,7 +101,7 @@ const IndexPage = () => {
           </div>
         </div>
         <div className={`row justify-content-center ${styles.FooterCard}`}>
-          <div className="col-12 col-md-6 ">
+          {/* <div className="col-12 col-md-6 ">
             <Card
               bgColor="#ff76762e"
               className="py-5 px-3 px-md-5 d-flex justify-content-between align-items-center flex-column flex-md-row"
@@ -115,7 +115,7 @@ const IndexPage = () => {
                 className="fw-little mt-3 mt-md-0"
               />
             </Card>
-          </div>
+          </div> */}
           <div className="col-12">
             <Footer />
           </div>

@@ -27,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:prod": "env-cmd -f .env.prod npm run-script build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
@@ -68,6 +69,8 @@
     "@storybook/node-logger": "^6.3.6",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.6",
-    "prettier": "^2.3.2"
+    "env-cmd": "^10.1.0",
+    "prettier": "^2.3.2",
+    "react-inject-env": "^2.1.0"
   }
 }
