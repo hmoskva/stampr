@@ -46,7 +46,8 @@ const IndexPage = () => {
       }
 
       // todo toast
-      alert(`stamp saved -> ${resp?.data?.stamped_url}`);
+      console.log(resp?.data?.stamped_url, "stamped url");
+      alert(`stamp saved. Check consolf for stamp url `);
     } catch (error) {
       console.log(`error`, error);
       throw error;
@@ -124,7 +125,7 @@ const IndexPage = () => {
           doc={documentUrl}
           show={showPreview}
           handleHide={() => setShowPreview(false)}
-          handleSubmit={({ stampPosition, width, height, customText }) =>
+          handleSubmit={({ stampPosition, width, height, customText, color }) =>
             createStamp({
               ...docPreview,
               ...stampPosition,
@@ -132,6 +133,7 @@ const IndexPage = () => {
               width,
               height,
               customText,
+              color,
             })
           }
         />
