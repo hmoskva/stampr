@@ -13,7 +13,7 @@ const StampPositioner = ({ stamp, doc, show, handleHide, handleSubmit }) => {
 
   const [stampPosition, setStampPosition] = useState({ x: 10, y: 10 });
   const [submitting, setSubmitting] = useState(false);
-  const [color, setColor] = useState("#fff  ");
+  const [color, setColor] = useState("#000");
   const [customText, setCustomText] = useState("");
   const [width, setWidth] = useState(120); // todo: use default image width/height or default 120
   const [height, setHeight] = useState(120);
